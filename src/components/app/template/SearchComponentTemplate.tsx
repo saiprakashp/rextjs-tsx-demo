@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import BasicCardTemplate from './components/app/template/BasicCardTemplate';
-import NavBarTemplate from './components/app/template/NavBarTemplate';
-import GridTemplate from './components/app/template/GridTemplate';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,19 +16,24 @@ import Typography from '@mui/material/Typography';
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import { Dispatch } from "redux"
 import { Container } from '@mui/material';
-import SearchComponentTemplate from './components/app/template/SearchComponentTemplate';
-import FilterComponent from './components/app/template/FilterComponent';
-
-
-export default function App() {
-  return (
-    <div>
-      <NavBarTemplate />
-      <SearchComponentTemplate />
-      <GridTemplate leftBoxWidth={4} rightBoxWidth={8} />
-    </div>
-
-
-
-  );
+import Input from '@mui/material/Input';
+const ariaLabel = { 'aria-label': 'description' };
+function SearchComponentTemplate() {
+    return <Box
+        component="form"
+        sx={{
+            '& > :not(style)': { m: 1 },
+        }}
+        noValidate
+        autoComplete="off"
+    >
+        <Input defaultValue="User Name" inputProps={ariaLabel} />
+        <Input defaultValue="User Name" inputProps={ariaLabel} />
+        <Input defaultValue="User Name" inputProps={ariaLabel} />
+        <Input defaultValue="User Name" inputProps={ariaLabel} />
+        <Input defaultValue="User Name" inputProps={ariaLabel} />
+        <Button variant="contained">Contained</Button>
+    </Box>;
 }
+
+export default SearchComponentTemplate;
