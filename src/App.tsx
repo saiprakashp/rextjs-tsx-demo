@@ -21,17 +21,16 @@ import { Dispatch } from "redux"
 import { Container } from '@mui/material';
 import SearchComponentTemplate from './components/app/template/SearchComponentTemplate';
 import FilterComponent from './components/app/template/FilterComponent';
-
-
+import FunctionalComponent from "./components/app/template/FunctionalComponent";
 export default function App() {
+  const dispatch = useDispatch()
+
   return (
-    <div>
+    <div className="App">
       <NavBarTemplate />
       <SearchComponentTemplate />
-      <GridTemplate leftBoxWidth={4} rightBoxWidth={8} />
+      <GridTemplate leftBoxWidth={3} rightBoxWidth={9} />
     </div>
-
-
 
   );
 }

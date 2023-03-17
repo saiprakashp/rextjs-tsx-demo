@@ -6,6 +6,7 @@ export interface Field {
     chipText: string;
     keyText: string;
     optionValues: string[];
+    checked: boolean;
 }
 
 
