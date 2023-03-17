@@ -20,8 +20,6 @@ import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import { Dispatch } from "redux"
 import { Container } from '@mui/material';
 import SearchComponentTemplate from './components/app/template/SearchComponentTemplate';
-import FilterComponent from './components/app/template/FilterComponent';
-import FunctionalComponent from "./components/app/template/FunctionalComponent";
 export default function App() {
   const dispatch = useDispatch()
 

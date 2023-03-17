@@ -45,30 +45,18 @@ import { Datafields } from '../../interfaces/DataProps';
 //     ]
 // };
 const generateKey = (data: string) => {
-    console.log(`${data}_${new Date().getTime()}`)
     return `${data}_${new Date().getTime()}`;
 }
-
-
-
-
-type IStateProps = Pick<FilterDataStore, "data">;
-
-
 
 const FilterComponent: React.FC = props => {
     const dispatch = useDispatch<DataStoreDispatch>();
 
-    const { data } = useSelector<FilterDataStore, IStateProps>(state => ({
-        data: state.data
-    }));
-    const articles: FilterDataStore = useSelector(
-        (state: FilterDataStore) => state
+    const filterData: Datafields = useSelector(
+        (state: Datafields) => state
     )
 
-    let [filterData, setFilterData] = useState<Datafields[]>();
 
-    let [tmpfilterData, setTmpFilterData] = useState<Datafields[]>();
+    let [tmpfilterData, setTmpFilterData] = useState<Datafields>();
 
     const resetFilter = () => {
         setTmpFilterData(filterData)
@@ -93,20 +81,36 @@ const FilterComponent: React.FC = props => {
 
     React.useEffect(() => {
         dispatch(getFilters("1"))
-
     }, [dispatch]);
 
-    React.useEffect(() => {
-        if(articles!=null)
-            console.log('articles', articles)
-      
-    }, [articles]);
 
     return (
         <>
             <div>
                 {
-                  
+                    (filterData == null) ? <p>Loading</p> :
+                        Object.values(filterData).map((data, index) => {
+                            return <Card sx={{ width: 'auto', marginBottom: '12px' }} key={generateKey(data.key)} >
+                                <CardContent>
+                                    <Typography variant="h6" component="div">
+                                        {data.title}
+                                    </Typography>
+                                    <Typography component="div">
+                                        <TextField id="standard-basic" label="Search Text" variant="standard" onChange={(e: any) => searchFilter(e, data.key)} />
+                                    </Typography>
+                                    <FormGroup>
+                                        {
+                                            Object.values(data.fields).map((fieldData: any, index) => {
+                                                return <FormControlLabel control={<Checkbox onClick={(e: any) =>
+                                                    filterDataFunc(e, data.key, fieldData.keyText)} checked={fieldData.checked} />}
+                                                    label={fieldData.title} key={generateKey(fieldData.keyText)}
+                                                />
+                                            })
+                                        }
+                                    </FormGroup>
+                                </CardContent>
+                            </Card>
+                        })
                 }
 
 
@@ -116,6 +120,6 @@ const FilterComponent: React.FC = props => {
 
         </>
     );
-};
+}
 
 export default FilterComponent;
