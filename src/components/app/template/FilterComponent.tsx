@@ -51,16 +51,29 @@ const generateKey = (data: string) => {
 const FilterComponent: React.FC = props => {
     const dispatch = useDispatch<DataStoreDispatch>();
 
-    const filterData: Datafields = useSelector(
-        (state: Datafields) => state
+    const filterData: Datafields[] = useSelector(
+        (state: Datafields[]) => state
     )
 
 
-    let [tmpfilterData, setTmpFilterData] = useState<Datafields>();
+    let [tmpfilterData, setTmpFilterData] = useState<Datafields[]>();
 
     const resetFilter = () => {
-        setTmpFilterData(filterData)
+
     }
+
+    const filterDataFunc = (event: React.ChangeEvent<HTMLInputElement>, keyData: string, valueData: string) => {
+
+    }
+
+    React.useEffect(() => {
+        dispatch(getFilters("1"))
+    }, [dispatch]);
+    React.useEffect(() => {
+        setTmpFilterData(filterData)
+    }, [filterData]);
+
+
     const searchFilter = (e: React.ChangeEvent<HTMLInputElement>, key: string): void => {
         let filterDatas = tmpfilterData;
         console.log(e.target.value, key)
@@ -71,25 +84,12 @@ const FilterComponent: React.FC = props => {
         }
     }
 
-
-
-    const filterDataFunc = (event: React.ChangeEvent<HTMLInputElement>, keyData: string, valueData: string) => {
-
-    }
-
-
-
-    React.useEffect(() => {
-        dispatch(getFilters("1"))
-    }, [dispatch]);
-
-
     return (
         <>
             <div>
                 {
-                    (filterData == null) ? <p>Loading</p> :
-                        Object.values(filterData).map((data, index) => {
+                    (tmpfilterData == null) ? <p>Loading</p> :
+                        Object.values(tmpfilterData).map((data, index) => {
                             return <Card sx={{ width: 'auto', marginBottom: '12px' }} key={generateKey(data.key)} >
                                 <CardContent>
                                     <Typography variant="h6" component="div">
