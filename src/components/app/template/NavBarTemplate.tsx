@@ -132,7 +132,8 @@ function NavBarTemplate() {
 
           <Box sx={{ flexGrow: 0 }}>
 
-            <Badge badgeContent={notificationCount} color="error" invisible ={notificationCount<=0} sx={{ marginRight: '1rem' }} anchorOrigin={{
+            <Badge badgeContent={notificationCount} color="error" invisible={notificationCount <= 0} sx={{ marginRight: '1rem' }}
+              anchorOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}>

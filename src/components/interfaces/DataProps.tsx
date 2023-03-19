@@ -16,8 +16,11 @@ export interface Datafields {
     fields: Field[];
 }
 
-type MyPartsFilterState = {
-    data: Datafields[];
+export type MyPartsFilterState = {
+    data:   Map<string, Datafields>;
+}
+export type MyPartsFilters = {
+    data:   String[];
 }
 type MyPartsFilterAction = {
     data: Datafields[];
