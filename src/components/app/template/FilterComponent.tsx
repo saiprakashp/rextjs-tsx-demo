@@ -4,13 +4,16 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Card, InputAdornment } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
+import Badge from '@mui/material/Badge';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Datafields, MyPartsFilterState } from '../../interfaces/DataProps';
-import {  FilterContext, UpdatePartsFilter } from '../../../App';
+import { FilterContext, UpdatePartsFilter } from '../../../App';
 import SearchIcon from '@mui/icons-material/Search';
-
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const generateKey = (data: string) => {
     return `${data}_${new Date().getTime()}`;
@@ -21,15 +24,15 @@ const FilterComponent: React.FC = props => {
     const filterData = useContext(FilterContext) as MyPartsFilterState;
 
 
-    const [tmpfilterData, setTmpFilterData] = useState<MyPartsFilterState>();
+    const [filterCardData, setFilterCardData] = useState<MyPartsFilterState | undefined>();
 
     const resetFilter = () => {
 
     }
 
     const filterDataFunc = (event: React.ChangeEvent<HTMLInputElement>, keyData: string, valueData: string) => {
-        if (tmpfilterData != null && tmpfilterData.data.get(keyData) !== undefined) {
-            const data: Datafields | any = tmpfilterData.data.get(keyData);
+        if (filterCardData != null && filterCardData.data.get(keyData) !== undefined) {
+            const data: Datafields | any = filterCardData.data.get(keyData);
             for (let i = 0; i < data.fields.length; i++) {
                 if (data.fields[i].keyText == valueData) {
                     data.fields[i].checked = event.target.checked;
@@ -38,8 +41,8 @@ const FilterComponent: React.FC = props => {
                 }
             }
         }
-        if (tmpfilterData != null)
-            setTmpFilterData({ ...tmpfilterData });
+        if (filterCardData != null)
+            setFilterCardData({ ...filterCardData });
     }
 
     const updatFilterStateData = (key: string, act: boolean) => {
@@ -57,7 +60,7 @@ const FilterComponent: React.FC = props => {
         }
     }
     const searchFilter = (e: React.ChangeEvent<HTMLInputElement>, key: string): void => {
-        let filterDatas = tmpfilterData;
+        let filterDatas = filterCardData;
         console.log(e.target.value, key)
         if (e.target.value === '') {
             resetFilter()
@@ -70,9 +73,9 @@ const FilterComponent: React.FC = props => {
 
     useEffect(() => {
         if (filterData != null) {
-            setTmpFilterData(filterData);
+            setFilterCardData(filterData);
         }
-    }, [tmpfilterData]);
+    }, [filterCardData]);
 
 
 
@@ -81,15 +84,21 @@ const FilterComponent: React.FC = props => {
 
             <div>
                 {
-                    (tmpfilterData != null) ?
-                        [...tmpfilterData.data.keys()].map((d, index) => {
-                            if (tmpfilterData != null && tmpfilterData.data.get(d) !== undefined) {
-                                const data: Datafields | any = tmpfilterData.data.get(d);
-                                return <Card sx={{ width: 'auto', marginBottom: '12px' }} key={generateKey(data.key)} >
-                                    <CardContent>
-                                        <Typography variant="h6" component="div">
-                                            {data.title}
-                                        </Typography>
+                    (filterCardData != null) ?
+                        [...filterCardData.data.keys()].map((d, index) => {
+                            if (filterCardData != null && filterCardData.data.get(d) !== undefined) {
+                                const data: Datafields | any = filterCardData.data.get(d);
+                                return <Accordion sx={{ maxWidth: '20rem', bordershadow: '0', backgroundcolor: 'white', borderRadiou: '0' }}
+                                    key={generateKey(data.key)} expanded>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls={'panelt' + index}
+                                        id={'panelt' + index}
+                                    >
+                                        <Typography>{data.title}</Typography>
+
+                                    </AccordionSummary>
+                                    <AccordionDetails>
                                         <Typography component="div">
                                             <TextField
                                                 label="Search Text"
@@ -104,18 +113,22 @@ const FilterComponent: React.FC = props => {
                                                 }}
                                             />
                                         </Typography>
-                                        <FormGroup>
-                                            {
-                                                Object.values(data.fields).map((fieldData: any, index) => {
-                                                    return <FormControlLabel control={<Checkbox onClick={(e: any) =>
-                                                        filterDataFunc(e, data.key, fieldData.keyText)} checked={fieldData.checked} />}
-                                                        label={fieldData.title + " (" + fieldData.chipText + ")"} key={generateKey(fieldData.keyText)}
-                                                    />
-                                                })
-                                            }
-                                        </FormGroup>
-                                    </CardContent>
-                                </Card>
+                                        <Typography>
+                                            <FormGroup>
+                                                {
+                                                    Object.values(data.fields).map((fieldData: any, index) => {
+                                                        return (
+                                                            <FormControlLabel control={<Checkbox onClick={(e: any) =>
+                                                                filterDataFunc(e, data.key, fieldData.keyText)} checked={fieldData.checked} />}
+                                                                labelPlacement="end"
+                                                                label={fieldData.title + " (" + fieldData.chipText + ")"}
+                                                            />)
+                                                    })
+                                                }
+                                            </FormGroup>
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
                             }
                         })
                         : <p> Loading</p>
