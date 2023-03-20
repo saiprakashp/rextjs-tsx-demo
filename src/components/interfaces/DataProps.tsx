@@ -19,11 +19,3 @@ export interface Datafields {
 export type MyPartsFilterState = {
     data:   Map<string, Datafields>;
 }
-export type MyPartsFilters = {
-    data:   String[];
-}
-type MyPartsFilterAction = {
-    data: Datafields[];
-}
-
-type DispatchType = (args: MyPartsFilterAction) => MyPartsFilterAction
