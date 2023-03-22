@@ -1,9 +1,9 @@
-import ParentComponent from './components/app/template/ParentComponent';
+import NavigationComponent from './components/app/template/NavigationComponent';
 
 const App = () => {
 
   return (<>
-    <ParentComponent /></>
+    <NavigationComponent /></>
   );
 }
 

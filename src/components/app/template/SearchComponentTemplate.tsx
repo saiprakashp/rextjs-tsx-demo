@@ -9,15 +9,15 @@ import { useState } from 'react';
 const ariaLabel = { 'aria-label': 'description' };
 
 interface SearchProps {
-    handleUserSearch(value: number): void;
+    handleUserSearch(value: string): void;
 }
 
 
 function SearchComponentTemplate({ handleUserSearch }: SearchProps) {
-
+    const [userSearch, setUserSearch] = useState('new_dog_breed')
     const [hideAdvFilter, setHideAdvFilter] = useState(false)
-    const handleUserSearchData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleUserSearch(parseInt(event.target.value))
+    const handleUserSearchData = () => {
+        handleUserSearch((userSearch))
     }
     return <>
         <Card sx={{ minWidth: 275 }}>
@@ -30,8 +30,9 @@ function SearchComponentTemplate({ handleUserSearch }: SearchProps) {
                     noValidate
                     autoComplete="off"
                 >
-                    <Input defaultValue="2019" inputProps={ariaLabel} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleUserSearchData(e)} />
-                    <Button variant="contained" sx={{ background: 'yellowgreen' }}>Contained</Button>
+                    <Input  value={userSearch} inputProps={ariaLabel}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserSearch(e.target.value)} />
+                    <Button variant="contained" sx={{ background: 'yellowgreen' }} onClick={() => handleUserSearchData()}>Contained</Button>
                     <a onClick={() => { setHideAdvFilter(!hideAdvFilter) }} style={{ color: 'black' }}>Hide Advance Filter</a>
                 </Box>
                 {!hideAdvFilter ?
