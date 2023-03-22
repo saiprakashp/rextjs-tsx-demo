@@ -34,6 +34,7 @@ const FilterComponent: React.FC = props => {
     const filterDataFunc = (event: React.ChangeEvent<HTMLInputElement>, keyData: string, valueData: string) => {
         if (filterCardData != null && filterCardData.data.get(keyData) !== undefined) {
             const data: Datafields | any = filterCardData.data.get(keyData);
+                data.showAccordian = true;
             for (let i = 0; i < data.fields.length; i++) {
                 if (data.fields[i].keyText == valueData) {
                     data.fields[i].checked = event.target.checked;
@@ -78,7 +79,13 @@ const FilterComponent: React.FC = props => {
         }
     }, [filterCardData]);
 
-
+    const setAccordionOpen = (keyData: string) => {
+        if (filterCardData != null && filterCardData.data.get(keyData) !== undefined) {
+            const data: Datafields | any = filterCardData.data.get(keyData);
+            data.showAccordian = !data.showAccordian;
+            setFilterCardData({ ...filterCardData });
+        }
+    }
 
     return (
         <>
@@ -89,9 +96,9 @@ const FilterComponent: React.FC = props => {
                         if (filterCardData != null && filterCardData.data.get(d) !== undefined) {
                             const data: Datafields | any = filterCardData.data.get(d);
                             return <Accordion sx={{ maxWidth: '20rem', bordershadow: '0', backgroundcolor: 'white', borderRadiou: '0' }}
-                                key={generateKey(data.key)} >
+                                key={generateKey(data.key)} expanded={data.showAccordian}>
                                 <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
+                                    expandIcon={<ExpandMoreIcon onClick={() => setAccordionOpen(data.key)} />}
                                     aria-controls={'panelt' + index}
                                     id={'panelt' + index}
                                 >

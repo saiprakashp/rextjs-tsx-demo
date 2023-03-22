@@ -13,9 +13,10 @@ export interface Field {
 export interface Datafields {
     title: string;
     key: string;
-    fields: Field[];
+    fields: Field[];    
+    showAccordian: boolean
 }
 
 export type MyPartsFilterState = {
-    data:   Map<string, Datafields>;
+    data: Map<string, Datafields>;
 }

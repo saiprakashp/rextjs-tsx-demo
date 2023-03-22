@@ -21,7 +21,7 @@ interface ComponentData {
 let dataProps = new Map<string, Datafields>();
 dataProps.set('my_work_status',
   {
-    title: 'My Work Status', key: 'my_work_status',
+    title: 'My Work Status', key: 'my_work_status', showAccordian: false,
     fields: [
       { title: 'Ready & Incomplete', inputType: 'checkbox', labelText: 'Ready & Incomplete', chipText: '57', optionValues: [], keyText: 'ready_and_complete', checked: false },
       { title: 'Not Ready', inputType: 'checkbox', labelText: 'Not Ready', chipText: '20', optionValues: [], keyText: 'not_ready', checked: false },
@@ -33,7 +33,7 @@ dataProps.set('my_work_status',
 
 dataProps.set('global_life_cycle',
   {
-    title: 'Global Lyfe Cycle', key: 'global_life_cycle', fields: [
+    title: 'Global Lyfe Cycle', key: 'global_life_cycle', showAccordian: false, fields: [
       { title: 'Ready & Incomplete', inputType: 'checkbox', labelText: 'Ready & Incomplete', chipText: '57', optionValues: [], keyText: 'ready_and_complete', checked: false },
       { title: 'Not Ready', inputType: 'checkbox', labelText: 'Not Ready', chipText: '20', optionValues: [], keyText: 'not_ready', checked: false },
       { title: 'Complete', inputType: 'checkbox', labelText: 'Complete', chipText: '23', optionValues: [], keyText: 'complete', checked: false },
@@ -44,7 +44,7 @@ dataProps.set('global_life_cycle',
 
 dataProps.set('ecm',
   {
-    title: 'ECM', key: 'ecm', fields: [
+    title: 'ECM', key: 'ecm', showAccordian: false, fields: [
       { title: 'Ready & Incomplete', inputType: 'checkbox', labelText: 'Ready & Incomplete', chipText: '57', optionValues: [], keyText: 'ready_and_complete', checked: false },
       { title: 'Not Ready', inputType: 'checkbox', labelText: 'Not Ready', chipText: '20', optionValues: [], keyText: 'not_ready', checked: false },
       { title: 'Complete', inputType: 'checkbox', labelText: 'Complete', chipText: '23', optionValues: [], keyText: 'complete', checked: false },
@@ -79,9 +79,9 @@ export default function GridTemplate(props: ComponentData) {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      
-        <a onClick={() => { showhideLeftBox() }} style={{ color: 'blue' }}> Show/ Hide Filters</a>
-      
+
+      <a onClick={() => { showhideLeftBox() }} style={{ color: 'blue' }}> Show/ Hide Filters</a>
+
 
       <UpdatePartsFilter.Provider value={[filterArr, setFilterArr]}>
 

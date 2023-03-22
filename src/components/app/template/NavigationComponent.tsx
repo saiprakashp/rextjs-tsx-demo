@@ -19,10 +19,10 @@ export default function NavigationComponent() {
 
   const [userSearch, setUserSearch] = useState<string>('');
   const [showErrorMessage, setErrorMessage] = useState<boolean>(false);
-  const { loading, error, data, refetch, networkStatus } = useQuery(GET_DOG_PHOTO, {
-    variables: { userSearch },
-    notifyOnNetworkStatusChange: true,
-  });
+  // const { loading, error, data, refetch, networkStatus } = useQuery(GET_DOG_PHOTO, {
+  //   variables: { userSearch },
+  //   notifyOnNetworkStatusChange: true,
+  // });
   const handleClose = () => {
     setErrorMessage(false)
   };
@@ -31,8 +31,8 @@ export default function NavigationComponent() {
     setUserSearch(value)
   }
 
-  if (networkStatus === NetworkStatus.refetch) return <CircularProgress />;
-  if (loading) return <CircularProgress />;
+  // if (networkStatus === NetworkStatus.refetch) return <CircularProgress />;
+  // if (loading) return <CircularProgress />;
 
 
   return (
